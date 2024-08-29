@@ -1843,9 +1843,10 @@ class Trainer:
             if self.args.ddp_broadcast_buffers is not None:
                 kwargs["broadcast_buffers"] = self.args.ddp_broadcast_buffers
 
-            #Set up accelerator configs here
+            #Notes: Set up accelerator configs for process groups here
             if self.process_group is not None:
-                print(self.process_group)
+                kwargs["process_group"] = self.process_group
+
 
             self.accelerator.ddp_handler = DistributedDataParallelKwargs(**kwargs)
 
