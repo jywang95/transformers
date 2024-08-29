@@ -1844,11 +1844,11 @@ class Trainer:
                 kwargs["broadcast_buffers"] = self.args.ddp_broadcast_buffers
 
             #Notes: Set up accelerator configs for process groups here
-            if self.process_group is not None:
-                kwargs["process_group"] = self.process_group
+            # if self.process_group is not None:
+            #     kwargs["process_group"] = self.process_group
 
 
-            self.accelerator.ddp_handler = DistributedDataParallelKwargs(**kwargs)
+            self.accelerator.ddp_handler = DistributedDataParallelKwargs(self.process_group, **kwargs)
 
         return model
 
