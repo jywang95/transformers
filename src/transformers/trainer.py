@@ -391,7 +391,7 @@ class Trainer:
         # pass the group handle
         process_group = None,
     ):
-        print("the value of group is:", process_group)
+        self.process_group = process_group
         if args is None:
             output_dir = "tmp_trainer"
             logger.info(f"No `TrainingArguments` passed, using `output_dir={output_dir}`.")
@@ -1844,6 +1844,8 @@ class Trainer:
                 kwargs["broadcast_buffers"] = self.args.ddp_broadcast_buffers
 
             #Set up accelerator configs here
+            if self.process_group is not None:
+                print(self.process_group)
 
             self.accelerator.ddp_handler = DistributedDataParallelKwargs(**kwargs)
 
