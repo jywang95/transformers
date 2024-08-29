@@ -1848,7 +1848,7 @@ class Trainer:
             #     kwargs["process_group"] = self.process_group
 
 
-            self.accelerator.ddp_handler = DistributedDataParallelKwargs(self.process_group, **kwargs)
+            self.accelerator.ddp_handler = DistributedDataParallelKwargs(process_group=self.process_group, **kwargs)
 
         return model
 
