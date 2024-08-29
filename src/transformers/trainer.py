@@ -388,7 +388,10 @@ class Trainer:
         callbacks: Optional[List[TrainerCallback]] = None,
         optimizers: Tuple[torch.optim.Optimizer, torch.optim.lr_scheduler.LambdaLR] = (None, None),
         preprocess_logits_for_metrics: Optional[Callable[[torch.Tensor, torch.Tensor], torch.Tensor]] = None,
+        # pass the group handle
+        group = None,
     ):
+        print("the value of group is:", group)
         if args is None:
             output_dir = "tmp_trainer"
             logger.info(f"No `TrainingArguments` passed, using `output_dir={output_dir}`.")
@@ -1839,6 +1842,8 @@ class Trainer:
 
             if self.args.ddp_broadcast_buffers is not None:
                 kwargs["broadcast_buffers"] = self.args.ddp_broadcast_buffers
+
+            #Set up accelerator configs here
 
             self.accelerator.ddp_handler = DistributedDataParallelKwargs(**kwargs)
 
