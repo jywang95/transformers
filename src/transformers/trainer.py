@@ -4669,7 +4669,7 @@ class Trainer:
         ###Notes: They initialize the Accelerator here!!
 
         # create accelerator object
-        self.accelerator = Accelerator(**args)
+        self.accelerator = Accelerator(self.process_group, **args)
         # some Trainer classes need to use `gather` instead of `gather_for_metrics`, thus we store a flag
         self.gather_function = self.accelerator.gather_for_metrics
 
