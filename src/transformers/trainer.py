@@ -1844,8 +1844,8 @@ class Trainer:
                 kwargs["broadcast_buffers"] = self.args.ddp_broadcast_buffers
 
             #Notes: Set up accelerator configs for process groups here
-            if self.process_group is not None:
-                kwargs["process_group"] = self.process_group
+            # if self.process_group is not None:
+            #     kwargs["process_group"] = self.process_group
 
 
             self.accelerator.ddp_handler = DistributedDataParallelKwargs(**kwargs)
@@ -4609,6 +4609,9 @@ class Trainer:
             self.repo.git_commit("Add *.sagemaker patterns to .gitignore.")
             self.repo.git_push()
 
+
+
+    # Notes: trainer initializes the accelerator here.
     def create_accelerator_and_postprocess(self):
         grad_acc_kwargs = {}
         if is_accelerate_available("0.28.0") and self.args.accelerator_config.gradient_accumulation_kwargs is not None:
@@ -4661,6 +4664,9 @@ class Trainer:
             args["dataloader_config"] = dataloader_config
         else:
             args.update(accelerator_config)
+
+
+        ###Notes: They initialize the Accelerator here!!
 
         # create accelerator object
         self.accelerator = Accelerator(**args)
